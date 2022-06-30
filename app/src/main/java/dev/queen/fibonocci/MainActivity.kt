@@ -1,5 +1,6 @@
 package dev.queen.fibonocci
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,30 +14,35 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         displayNumbers()
+
     }
 
     fun displayNumbers() {
-        var numberList = listOf(numbers(100))
+        var numberList = fibo(100)
         var numberAdapter = NumberRecyclerViewAdapter(numberList)
 
         binding.rvFibo.layoutManager = LinearLayoutManager(this)
         binding.rvFibo.adapter = numberAdapter
     }
 
-    fun numbers(n: Int): Int {
-        var prev1 = 0
-        var prev2 = 1
 
-        for (i in 1..n) {
-            var sumNums = prev1
-            prev1 = prev2
-            prev2 = sumNums + prev1
+    fun fibo(n: Int):List<Int> {
+        var list = ArrayList<Int>()
+        var prev = 0
+        var prevOne = 1
+
+        for (i in 0..n) {
+            var sum = prev + prevOne
+            prev = prevOne
+            prevOne = sum
+            list+=sum
+
+            Log.d(TAG,"${sum}")
 
         }
-        return prev1
 
+        return list
     }
-
 
 
 }
